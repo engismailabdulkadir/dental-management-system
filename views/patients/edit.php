@@ -65,6 +65,7 @@ require __DIR__ . '/../layouts/app_start.php';
         const fullName = (form.querySelector('input[name="full_name"]')?.value || '').trim();
         const phoneRaw = (form.querySelector('input[name="phone"]')?.value || '').trim();
         const phone = phoneRaw.replace(/\D+/g, '');
+        const address = (form.querySelector('textarea[name="address"]')?.value || '').trim();
         const nameParts = fullName.split(/\s+/).filter(Boolean);
 
         if (nameParts.length !== 3) {
@@ -73,6 +74,16 @@ require __DIR__ . '/../layouts/app_start.php';
                 Swal.fire({ icon: 'error', title: 'Invalid Name', text: 'Full Name must be exactly 3 words.' });
             } else {
                 alert('Full Name must be exactly 3 words.');
+            }
+            return;
+        }
+
+        if (address.length <= 5 || !/[A-Za-z]/.test(address)) {
+            e.preventDefault();
+            if (window.Swal) {
+                Swal.fire({ icon: 'error', title: 'Invalid Address', text: 'Address must be at least 6 characters and include at least one letter.' });
+            } else {
+                alert('Address must be at least 6 characters and include at least one letter.');
             }
             return;
         }

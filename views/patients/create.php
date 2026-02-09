@@ -52,4 +52,23 @@ require __DIR__ . '/../layouts/app_start.php';
     </div>
 </form>
 
+<script>
+(function () {
+    const form = document.querySelector('form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        const address = (form.querySelector('textarea[name="address"]')?.value || '').trim();
+        if (address.length <= 5 || !/[A-Za-z]/.test(address)) {
+            e.preventDefault();
+            if (window.Swal) {
+                Swal.fire({ icon: 'error', title: 'Invalid Address', text: 'Address must be at least 6 characters and include at least one letter.' });
+            } else {
+                alert('Address must be at least 6 characters and include at least one letter.');
+            }
+        }
+    }, true);
+})();
+</script>
+
 <?php require __DIR__ . '/../layouts/app_end.php'; ?>

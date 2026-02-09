@@ -50,4 +50,23 @@ require __DIR__ . '/../layouts/app_start.php';
     </div>
 </form>
 
+<script>
+(function () {
+    const form = document.querySelector('form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        const notes = (form.querySelector('textarea[name="notes"]')?.value || '').trim();
+        if (notes && !/^[A-Za-z\s]+$/.test(notes)) {
+            e.preventDefault();
+            if (window.Swal) {
+                Swal.fire({ icon: 'error', title: 'Invalid Notes', text: 'Notes must contain only letters.' });
+            } else {
+                alert('Notes must contain only letters.');
+            }
+        }
+    }, true);
+})();
+</script>
+
 <?php require __DIR__ . '/../layouts/app_end.php'; ?>
